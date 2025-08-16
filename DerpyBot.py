@@ -11,26 +11,29 @@ bot_testing_channel_id = 1406052132091854848
 glazemode = False
 glazeid: int = 1208411632103854091
 
+
+GUILD_ID = discord.Object(id=1265057220123431044)
+
 class Client(commands.Bot):
     async def on_ready(self):
         global bot_testing_channel
         bot_testing_channel = client.get_channel(bot_testing_channel_id)
-
+        
         print(f"connected to server as {self.user}!!!!!!!!!!!!!!!")
         
         try:
-            guild = discord.Object(id=1265057220123431044)
-            synced = await self.tree.sync(guild=guild)
-            print(f'synced {len(synced)} commands to guild {guild.id}')
-
+            synced = await self.tree.sync(guild=GUILD_ID)
+            glob_sync = await self.tree.sync()
+            # you can add more specific server id's
+            print(f"Synced {len(synced)} of my commands and {len(glob_sync)} globally")
         except Exception as e:
-            print(f'somthing: {e}')
+            print(f"Failed to sync commands: {e}")
 
     async def on_message(self, message):
         #if message.author == client.user:
         #    return
         
-        print(message.author.id)
+        print(f"{message.author} : {message.content}")
 
         cooluserid: int = 1208411632103854091
         karblarid: int = 795020647272284173
@@ -51,19 +54,19 @@ class Client(commands.Bot):
             
             
             case "Fortnight":
-                picture = discord.File("Fortnight.gif")
+                picture = discord.File("Derpybot\Fortnight.gif")
                 await message.channel.send(file = picture)
 
             case "School bathroom":
-                picture = discord.File("ThousandYardStare.png")
+                picture = discord.File("Derpybot/ThousandYardStare.png")
                 await message.channel.send(file = picture)
             
             case "School":
-                picture = discord.File("ThousandYardStare.png")
+                picture = discord.File("Derpybot/ThousandYardStare.png")
                 await message.channel.send(file = picture)
             
             case "boys bathroom":
-                picture = discord.File("ThousandYardStare.png")
+                picture = discord.File("Derpybot/ThousandYardStare.png")
                 await message.channel.send(file = picture)
             
             case "shutdown":
@@ -77,34 +80,95 @@ intents.message_content = True
 client = Client(command_prefix="!", intents=intents)
 
 
-GUILD_ID = discord.Object(id=1265057220123431044)
 
-@client.tree.command(name ="shutdown", description="NO PLEASE DONT PLEASE", guild=GUILD_ID)
+@client.tree.command(name ="shutdown", description="NO PLEASE DONT PLEASE")
 async def pingDerpy(interaction: discord.Interaction, supersecretpassword: str):
     if supersecretpassword == "bruh":
         await interaction.response.send_message("gng ts does not woafsrk")
         sys.exit(0)
+    else:
+        await interaction.response.send_message("You are so stupuid")
 
-@client.tree.command(name ="crazy", description="dont click please", guild=GUILD_ID)
+@client.tree.command(name ="crazy", description="dont click please")
 async def pingDerpy(interaction: discord.Interaction):
     await interaction.response.send_message("Crazy?")
 
-@client.tree.command(name ="glaze", description="you wanna be glazed?", guild=GUILD_ID)
+@client.tree.command(name ="glaze", description="you wanna be glazed?")
 async def pingDerpy(interaction: discord.Interaction):
     global glazemode
     global glazeid
     glazeid = interaction.user.id
-    print(glazeid)
     if glazemode:
         glazemode = False
         await interaction.response.send_message("no more glaze for you")
     else:
         glazemode = True
-        await interaction.response.send_message("Jarvis, activate glaze glaze?")
+        await interaction.response.send_message("Jarvis, activate glaze phase?")
 
-@client.tree.command(name ="lobotomy", description="lobotomy 101", guild=GUILD_ID)
+
+@client.tree.command(name ="lobotomy", description="lobotomy 101")
 async def pingDerpy(interaction: discord.Interaction):
-    await interaction.response.send_message("https://en.wikipedia.org/wiki/Lobotomy")
+    await interaction.user.send("hi why do you want to give a lobotomy?")
+    await interaction.user.send("hi why do you want to give a lobotomy?")
+    await interaction.user.send("hi why do you want to give a lobotomy?")
+    await interaction.user.send("hi why do you want to give a lobotomy?")
+    await interaction.user.send("hi why do you want to give a lobotomy?")
+    await interaction.user.send("hi why do you want to give a lobotomy?")
+    await interaction.user.send("hi why do you want to give a lobotomy?")
+    await interaction.user.send("hi why do you want to give a lobotomy?")
+    await interaction.user.send("hi why do you want to give a lobotomy?")
+    await interaction.user.send("hi why do you want to give a lobotomy?")
+    await interaction.user.send("hi why do you want to give a lobotomy?")
+    await interaction.user.send("hi why do you want to give a lobotomy?")
+    await interaction.user.send("hi why do you want to give a lobotomy?")
+    await interaction.user.send("hi why do you want to give a lobotomy?")
+    await interaction.user.send("hi why do you want to give a lobotomy?")
+    await interaction.user.send("hi why do you want to give a lobotomy?")
+
+
+@client.tree.command(name ="pingyoself", description="pings")
+async def pingyoself(interaction: discord.Interaction, times: int):
+    await interaction.response.send_message(f"<@{interaction.user.id}>")
+    sutnh: bool = False
+    if times >= 25:
+        sutnh = True
+        await interaction.response.send_message("ok im not gonna let you do this although it would be funny this is gonna go on forever")
+    
+    elif times > 1 and not sutnh:
+        
+        for x in range(times - 1):
+            
+            await interaction.channel.send(f"<@{interaction.user.id}>")
+    
+    elif times == 1:
+        await interaction.response.send_message(f"<@{interaction.user.id}>")
+    
+    elif times <= 0:
+        await interaction.response.send_message(f"syou fricking thug who do you think you are putting less than one on this thing i hate people like you. People like you shouldn't be allowed to use things like this its so horrible i hate you so much")
+
+
+@client.tree.command(name ="pleasedontpress", description="uh oh")
+async def pleasedonotpress(interaction: discord.Interaction, times: int):
+    if not times <= 0:
+        for x in range(times * 5):
+            await interaction.user.send("dumbass clanker i told you not to click this you dumbass no inteligent person?")
+
+
+@client.tree.command(name ="ohnodontclick", description="ashtysdf ssdbfsdfas f")
+async def spamping(interaction: discord.Interaction, user : discord.Member, times: int):
+    if not times <= 0 :
+        if times >= 25:
+            await interaction.response.send_message("gng how do you think they would feel if someone did this to you :sob: :wilted_rose: :low_battery:")
+        else:
+            for x in range(times):
+                await interaction.channel.send(f"<@{int(user.id)}>")
+                
+
+
+
+
+
+#@commands.has_role("1265059899163807745")
 
 
 client.run(magicTOKEN)
